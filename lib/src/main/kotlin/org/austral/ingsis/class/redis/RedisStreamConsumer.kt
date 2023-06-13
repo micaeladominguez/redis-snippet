@@ -36,9 +36,9 @@ abstract class RedisStreamConsumer<Value>(protected val streamKey: String, prote
                     println("Consumer group ${groupId} for stream ${streamKey} exists!")
                 }
             } catch (e: Exception) {
+                println("Exception: $e")
                 println("Stream ${streamKey} doesn't exist. Creating stream ${streamKey} and group ${groupId}")
                 redis.opsForStream<Any, Any>().createGroup(streamKey, groupId).awaitSingle()
-                println("Exception: $e")
             }
         }
         val container = StreamReceiver.create(redis.connectionFactory, options)
