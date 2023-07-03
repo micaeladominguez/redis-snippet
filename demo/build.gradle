@@ -18,7 +18,6 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
     maven {
         name = "GitHubPackages"
@@ -29,6 +28,7 @@ repositories {
         }
     }
 }
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
