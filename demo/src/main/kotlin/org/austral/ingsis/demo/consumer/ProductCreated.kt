@@ -1,3 +1,5 @@
 package org.austral.ingsis.demo.consumer
 
-data class ProductCreated(val name: String)
+import configurationLinter.ConfigClassesLinter
+
+data class ProductCreated(val snippet: String, val rules: ArrayList<ConfigClassesLinter>)

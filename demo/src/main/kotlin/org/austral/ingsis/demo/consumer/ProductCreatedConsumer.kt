@@ -1,5 +1,7 @@
 package org.austral.ingsis.demo.consumer
 
+import interpreterUtils.ReadInput
+import interpreterUtils.ReadInputImpl
 import org.austral.ingsis.`class`.redis.RedisStreamConsumer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -7,6 +9,9 @@ import org.springframework.data.redis.connection.stream.ObjectRecord
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
+import printscript.CommonPrintScriptRunner
+import printscript.PrintscriptRunner
+import version.getLatestVersion
 import java.time.Duration
 
 @Component
@@ -24,7 +29,14 @@ class ProductCreatedConsumer @Autowired constructor(
     }
 
     override fun onMessage(record: ObjectRecord<String, ProductCreated>) {
-        // What we want to do with the stream
-        println("Id: ${record.id}, Value: ${record.value}, Stream: ${record.stream}, Group: ${groupId}")
+        println("Id: ${record.id}, Snippet: ${record.stream} Group: ${groupId}")
+        val snippetCodeFlow = stringToFlow(record.value.snippet)
+        val printer = PrinterCollector()
+        val readInput: ReadInput = ReadInputImpl()
+        val lastVersion = getLatestVersion()
+        val runner: PrintscriptRunner = CommonPrintScriptRunner(printer,lastVersion,readInput)
+        val analyzed = runner.runAnalyzing(snippetCodeFlow, record.value.rules)
+        println("CODE ANALYZED $analyzed")
     }
+
 }

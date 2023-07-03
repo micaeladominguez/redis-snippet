@@ -1,16 +1,18 @@
 package org.austral.ingsis.demo.route
 
 import org.austral.ingsis.demo.producer.ProductCreatedProducer
+import org.austral.ingsis.demo.rule.LintedRules.Companion.getLintedRules
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class StreamTestRoute @Autowired constructor(private val producer: ProductCreatedProducer) {
 
-    @PostMapping("v1/stream/{name}")
-    suspend fun post(@PathVariable name: String) {
-        producer.publishEvent(name)
+    @PostMapping("/linting")
+    suspend fun post( @RequestBody getDTO: GetDTO) {
+        val lintedRules = getLintedRules(getDTO.rules)
+        producer.publishEvent(getDTO.snippet, lintedRules)
     }
 }

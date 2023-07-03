@@ -1,5 +1,6 @@
 package org.austral.ingsis.demo.producer
 
+import configurationLinter.ConfigClassesLinter
 import kotlinx.coroutines.reactor.awaitSingle
 import org.austral.ingsis.`class`.redis.RedisStreamProducer
 import org.austral.ingsis.demo.consumer.ProductCreated
@@ -14,9 +15,9 @@ class ProductCreatedProducer @Autowired constructor(
     redis: ReactiveRedisTemplate<String, String>
 ) : RedisStreamProducer(streamKey, redis) {
 
-    suspend fun publishEvent(name: String) {
+    suspend fun publishEvent(snippet: String, rules: ArrayList<ConfigClassesLinter> ) {
         println("Publishing on stream: $streamKey")
-        val product = ProductCreated(name)
+        val product = ProductCreated(snippet, rules)
         emit(product).awaitSingle()
     }
 }

@@ -18,7 +18,16 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/Nachoferra1894/printscript")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -33,7 +42,11 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
-
+    implementation 'edu.austral.ingsis.prinstcript:lib:1.1.2'
+    implementation 'edu.austral.ingsis.prinstcript:runner:1.1.2'
+    implementation 'edu.austral.ingsis.prinstcript:interpreter:1.1.2'
+    implementation 'edu.austral.ingsis.prinstcript:formatter:1.1.2'
+    implementation 'edu.austral.ingsis.prinstcript:linter:1.1.2'
     implementation project(':lib')
 }
 
