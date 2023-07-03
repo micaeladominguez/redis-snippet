@@ -3,8 +3,8 @@ name: Gradle Build and test
 on: [ push,pull_request ]
 
 env:
-  GPR_USER: ${{ secrets.GITHUB_USERNAME }}
-  GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
+  USERNAME: ${{ secrets.GITHUB_USERNAME }}
+  TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
