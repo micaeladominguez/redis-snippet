@@ -4,6 +4,7 @@ on: [ push,pull_request ]
 
 jobs:
   build:
+    uses: Nachoferra1894/ingsis-actions/.github/workflows/gradle-test.yml@main
     runs-on: ubuntu-latest
     steps:
       - name: Set up environment variables
@@ -13,6 +14,3 @@ jobs:
         run: |
           echo "GPR_USER=$GPR_USER" >> $GITHUB_ENV
           echo "GPR_KEY=$GPR_KEY" >> $GITHUB_ENV
-
-      - name: Checkout code
-        uses: Nachoferra1894/ingsis-actions/.github/workflows/gradle-test.yml@main
