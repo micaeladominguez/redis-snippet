@@ -2,15 +2,10 @@ name: Gradle Build and test
 
 on: [ push,pull_request ]
 
+env:
+  GPR_USER: ${{ secrets.GITHUB_USERNAME }}
+  GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build:
     uses: Nachoferra1894/ingsis-actions/.github/workflows/gradle-test.yml@main
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up environment variables
-        env:
-          GPR_USER: ${{ secrets.GITHUB_USERNAME }}
-          GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "GPR_USER=$GPR_USER" >> $GITHUB_ENV
-          echo "GPR_KEY=$GPR_KEY" >> $GITHUB_ENV
