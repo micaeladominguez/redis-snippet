@@ -27,4 +27,3 @@ To use the helper library use the following:
 implementation 'org.austral.ingsis:redis-streams:0.1.x'
 ```
 
-**Note**: this library doesn't declare the version of the dependencies it uses.
